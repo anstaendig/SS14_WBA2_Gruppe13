@@ -52,9 +52,9 @@ server.on('request', function (req, res) {
 		res.write('<table border="1">');
 		res.write('<tr><th>Name</th><th>Durchmesser in km</th><th>Abstand zur Sonne in Mio km</th></tr>');
 		// forEach loop through planeten JSON Array
-		for (var i in planeten) {
-			res.write('<tr><td>' + planeten[i].Name + '</td><td>' + planeten[i].Durchmesser + '</td><td>' + planeten[i].Entfernung + '</td></tr>');
-		};
+		planeten.forEach(function(planet) {
+			res.write('<tr><td>' + planet.Name + '</td><td>' + planet.Durchmesser + '</td><td>' + planet.Entfernung + '</td></tr>');
+		})
 		res.write('</table>');
 		res.write('<form action="/Planeten" method="post" >');
 	  	res.write('Name:<input type="text" name="Name"><br>');
