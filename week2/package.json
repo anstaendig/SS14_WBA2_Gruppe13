@@ -1,0 +1,11 @@
+{
+  "name": "week2",
+  "version": "0.1.0",
+  "description": "week2 exercises",
+  "main": "app.js",
+  "author": "group 13",
+  "readmeFilename": "../README.md",
+  "dependencies": {
+    "express": "*"
+  }
+}

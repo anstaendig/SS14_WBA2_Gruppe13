@@ -23,6 +23,7 @@ server.on('request', function (req, res) {
 	// Empty string for body object
 	var body = '';
 
+	// TO DO: push comes after 'data'
 	req.on('data', function(data){
 		// Add data to body as string
 		body = body + data.toString();
@@ -30,15 +31,16 @@ server.on('request', function (req, res) {
 
 	req.on('end', function() {
 		// Parse body string to JS/JSON object
+		console.log(body);
 		var daten = querystring.parse(body);
-		
+
 		// Check if form is not empty *dirty*
 		if (typeof daten.Name == 'string') {
 			// Add form data to JSON array
 			planeten.push(daten);
 		};
 
-		// Save path 
+		// Save path
 		var pfad = url.parse(req.url).pathname;
 		// Check for correct path "/Planeten"
 		if (pfad != "/Planeten") {
@@ -62,7 +64,7 @@ server.on('request', function (req, res) {
 	  	res.write('Entfernung: <input type="text" name="Entfernung"><br>');
 	  	res.write('<input type="submit">');
 		res.write('</form>');
-		res.end();	
-	}); 
+		res.end();
+	});
 });
 server.listen(1337);
