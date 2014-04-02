@@ -1,0 +1,13 @@
+{
+  "name": "week3",
+  "version": "0.1.0",
+  "description": "week3 exercises",
+  "main": "server.js",
+  "author": "group 13",
+  "readmeFilename": "../README.md",
+  "dependencies": {
+    "express": "*",
+    "mongoskin": "*",
+    "faye": "*"
+  }
+}
