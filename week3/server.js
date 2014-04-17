@@ -6,7 +6,6 @@ var http = require('http');
 var faye = require('faye');
 var mongo = require('mongoskin');
 
-
 // MongoDB
 //* Establish conneciton to mongodb
 var db = mongo.db('mongodb://localhost/week3?auto_reconnect=true', {safe: true});
@@ -51,6 +50,10 @@ app.use(function(error, req, res, next) {
 
 // Set application port
 app.set('port', 3000);
+// Jade Enginge
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jade');
+
 
 // Specifiy response for 'GET' on '/planets'
 app.get('/planets', function(req, res, next) {
@@ -61,8 +64,9 @@ app.get('/planets', function(req, res, next) {
 		// Transfer JSON file to client
 		else {
 			// Respond with collection in JSON format
-			res.writeHead(200, {'Content-Type': 'application/json'});
-			res.end(JSON.stringify(result));
+			// res.writeHead(200, {'Content-Type': 'application/json'});
+			// res.end(JSON.stringify(result));
+			res.render('planets', {planets: result});
 		};
 	});
 });

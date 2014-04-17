@@ -1,0 +1,20 @@
+// JADE Template 'planets'
+doctype html
+html
+  head
+    title Planets
+  body
+    h1 Planets
+    table#tabelle.wrapper
+      thead
+        th Name
+        th Diameter
+        th Distance
+      tbody
+        - console.log(planets);
+        - planets.forEach(function(planet) {
+          tr
+            td= planet.name
+            td= planet.diameter
+            td= planet.distance
+        - });
