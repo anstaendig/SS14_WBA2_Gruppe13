@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>bio find</title>
+    <!-- Load jQuery -->
+    <script type='text/javascript' src='http://code.jquery.com/jquery-1.11.0.min.js'></script>
+    <!-- Load faye -->
+    <script type='text/javascript' src='/faye/client.js'></script>
+  </head>
+  <body>
+    <div>
+      <p>Welches Produkt möchten Sie hinzufügen?</p>
+    </div>
+    <!-- Form markup -->
+    <form id='publish' action='/products' method='post'>
+      <div>
+        Name: <input type='text' name ='name' id='name' /><br />
+        Preis: <input type='text' name ='price' id='price' /><br />
+        <label>Kategorie:</label><br />
+        <select name='topic' id='topic'>
+          <option value='/milk'>Milch</option>
+          <option value='/bread'>Brot</option>
+          <option value='/cheese'>Käse</option>
+          <option value='/eggs'>Eier</option>
+          <option value='/5'>5</option>
+          <option value='/6'>6</option>
+          <option value='/7'>7</option>
+          <option value='/8'>8</option>
+        </select>
+      </div>
+      <div>
+        <input type='submit' value='Hinzufügen' />
+      </div>
+      <p><a href='/'>HOME</a></p>
+    </form>
+
+    <script type='text/javascript'>
+    	$(document).ready(function() {
+        $(#publish).submit(function(event) {
+          event.preventDefault();
+    			var formURL = $(this).attr('action');
+          var data = {
+            name: $('#name').val(),
+            price: $('#price').val(),
+            topic: $('#topic').val()
+          };
+          // Specifiy 'POST' on '/planets'
+          var ajaxPost = $.ajax({
+            // Destination
+            url: formURL,
+            // Type of request
+            type: 'POST',
+            // Define what to be posted to server
+            // JSON.stringify() parses object into string because we cannot send an object (still JSON syntax)
+            data: JSON.stringify(data),
+            // Define type of content
+            contentType: 'application/json'
+          });
+          // Create pop-up (res.writeHead(200) required from server) and clear form after successful promise
+          ajaxPost.done(function() {
+            alert(data.name + ' added.');
+            $('#publish')[0].reset();
+          });
+          // Create pop-up with error message after promise failed
+          ajaxPost.fail(function(e) {
+            alert(data.name + ' not added. (' + JSON.stringify(e) + ')');
+          });
+          // Prevent default action of form
+          event.preventDefault();
+    		});
+    	});
+    </script>
+  </body>
+</html>
