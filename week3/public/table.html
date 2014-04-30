@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>WBA2 - Week 2</title>
+		<!-- Load jQuery -->
+		<script type='text/javascript' src='http://code.jquery.com/jquery-1.11.0.min.js'></script>
+		<!-- Load faye -->
+		<script type='text/javascript' src='/faye/client.js'></script>
+	</head>
+	<body>
+		<!-- table markup -->
+		<table border='1' id='news'>
+			<tr>
+				<th>Name</th>
+				<th>Diameter in km</th>
+				<th>Distance to sun in km * 10^6</th>
+			</tr>
+		</table>
+
+		<!-- Form markup -->
+		<form name='planets' id='planets' action='/planets' method='POST'>
+			Planet: <input type='text' name='name' id='name'/><br />
+			Diameter: <input type='text' name='diameter' id='diameter'/><br />
+			Distance: <input type='text' name='distance' id='distance'/><br />
+			<input type='submit' name='submit' value='add' />
+		</form>
+
+		<!-- SCRIPTS -->
+		<script type='text/javascript'>
+	      // Wait for document to be ready
+	      $(document).ready(function() {
+	        // Create PubSub client
+	        var client = new Faye.Client('/faye');
+
+	        // Subscribe '/planets' topic
+	        var subscription = client.subscribe('/planets', function(message) {
+	          //
+	          addTableRow(message);
+	      	});
+
+	        // Define action after submitting form
+	        $('#planets').submit(function(event) {
+	          // Save destination of our form from 'action'
+	          var formURL = $(this).attr('action');
+	          // Save form content into object 'data' (JSON syntax)
+	          var data = {
+	          	name: $('#name').val(),
+	          	diameter: $('#diameter').val(),
+	          	distance: $('#distance').val()
+	          };
+
+	          // Specifiy 'POST' on '/planets'
+	          var ajaxPost = $.ajax({
+	            // Destination
+	            url: formURL,
+	            // Type of request
+	            type: 'POST',
+	            // Define what to be posted to server
+	            // JSON.stringify() parses object into string because we cannot send an object (still JSON syntax)
+	            data: JSON.stringify(data),
+	            // Define type of content
+	            contentType: 'application/json'
+	          });
+	          // Create pop-up (res.writeHead(200) required from server) and clear form after successful promise
+	          ajaxPost.done(function() {
+	          	alert(data.name + ' added.');
+	          	$('#planets')[0].reset();
+	          });
+	          // Create pop-up with error message after promise failed
+	          ajaxPost.fail(function(e) {
+	          	alert(data.name + ' not added. (' + JSON.stringify(e) + ')');
+	          });
+	          // Prevent default action of form
+	          event.preventDefault();
+	      	});
+
+	        // Specifiy 'GET' on '/planets'
+	        // Display list of all JSON objects in database collection
+	        var request = $.ajax({
+	        	url: '/planets',
+	        	type: 'GET',
+	        	contentType: 'application/json'
+	        });
+	        // Extend table by calling function 'addTableRow' on database objects after successful promise
+	        request.done(function(data) {
+	        	data.forEach(function(planet) {
+	        		addTableRow(planet);
+	        	});
+	        });
+	        // Create pop-up with error message after promise failed
+	        request.fail(function(e) {
+	        	alert('Something went wrong!(Error: ' + JSON.stringify(e) + ')');
+	        });
+	        // Append row to table
+	        var addTableRow = function(planet) {
+	        	$('#news').append('<tr><td>' + planet.name + '</td><td>' + planet.diameter + '</td><td>' + planet.distance + '</td></tr>');
+	        };
+	    });
+		</script>
+	</body>
+</html>

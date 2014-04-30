@@ -8,15 +8,6 @@
     <script type='text/javascript' src='/faye/client.js'></script>
   </head>
   <body>
-    <!-- table markup -->
-    <table border='1' id='news'>
-	     <tr>
-         <th>Name</th>
-         <th>Diameter in km</th>
-         <th>Distance to sun in km * 10^6</th>
-       </tr>
-    </table>
-
     <!-- Form markup -->
     <form name='planets' id='planets' action='/planets' method='POST'>
 	    Planet: <input type='text' name='name' id='name'/><br />
@@ -29,15 +20,6 @@
     <script type='text/javascript'>
       // Wait for document to be ready
       $(document).ready(function() {
-        // Create PubSub client
-        var client = new Faye.Client('/faye');
-
-        // Subscribe '/planets' topic
-        var subscription = client.subscribe('/planets', function(message) {
-          //
-          addTableRow(message);
-        });
-
         // Define action after submitting form
         $('#planets').submit(function(event) {
           // Save destination of our form from 'action'

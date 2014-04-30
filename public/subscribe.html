@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>bio find</title>
+    <!-- Load jQuery -->
+    <script type='text/javascript' src='http://code.jquery.com/jquery-1.11.0.min.js'></script>
+    <!-- Load faye -->
+    <script type='text/javascript' src='/faye/client.js'></script>
+  </head>
+  <body>
+    <div>
+      <p>Welche Kategorien möchten Sie subscriben?</p>
+    </div>
+    <!-- Form markup -->
+    <form id='subscribe'>
+      <div>
+        <label>Kategorien:</label><br />
+        <input type='checkbox' name='category' value='/milk' />Milch<br />
+        <input type='checkbox' name='category' value='/bread' />Brot<br />
+        <input type='checkbox' name='category' value='/cheese' />Käse<br />
+        <input type='checkbox' name='category' value='/eggs' />Eier<br />
+        <input type='checkbox' name='category' value='/5' />5<br />
+        <input type='checkbox' name='category' value='/6' />6<br />
+        <input type='checkbox' name='category' value='/7' />7<br />
+        <input type='checkbox' name='category' value='/8' />8<br />
+      </div>
+      <div>
+        <input type='submit' value='Subscribe' />
+      </div>
+      <p><a href='/'>HOME</a></p>
+    </form>
+    <table id='messages' border=1>
+    	<tr>
+        	<th>Name</th>
+          	<th>Preis</th>
+          	<th>Topic</th>
+        </tr>
+    </table>
+
+    <script type='text/javascript'>
+    	$(document).ready(function() {
+    		var client = new Faye.Client('/faye');
+    		var subscription = client.subscribe('/milk', function(message) {
+    			addTableRow(message);
+    		});
+    		/*
+    		$(#subscribe).submit(function(event) {
+    			var i, category = documents.forms[0].category;
+    			for(i = 0, i < category.length, i++) {
+    				if(category[i].checked) {
+    					client.subscribe(category[i].value, function(message) {
+    						// Send Message
+    						addTableRow(message);
+    						console.log(message);
+    					});
+    				};
+    			};
+    			event.preventDefault();
+    		});
+			*/
+    		var addTableRow = function(message) {
+	        	console.log(message);
+	        	$('#messages').append('<tr><td>' + message.name + '</td><td>' + message.price + '</td><td>' + message.topic + '</td></tr>');
+	        };
+    	});
+    </script>
+  </body>
+</html>
