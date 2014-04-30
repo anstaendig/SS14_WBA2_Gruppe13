@@ -1,4 +1,11 @@
 // WBA2 - bio find
+// TO DO:
+// - user registration
+// - subscriben 
+// - link documents in db
+// - asynchron: email + (msg on page)
+// - data structure
+// (- front-end)
 
 // Load required modules
 var express = require('express');
@@ -15,7 +22,6 @@ db.bind('products')
 //* Save collection 'planets' as object 'planets'
 var markets = db.markets;
 var products = db.products;
-
 
 // Servers
 //* Create 'express()' object
