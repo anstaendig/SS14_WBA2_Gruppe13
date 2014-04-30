@@ -6,6 +6,7 @@
 // - asynchron: email + (msg on page)
 // - data structure
 // (- front-end)
+// unter topic 
 
 // Load required modules
 var express = require('express');
@@ -138,7 +139,7 @@ app.post('/user', function(req, res, next) {
 	});
 });
 
-// TEST<
+// TEST
 // Specifiy response for 'GET' on '/planets'
 app.get('/user', function(req, res, next) {
 	// Get data from database 'planets'
