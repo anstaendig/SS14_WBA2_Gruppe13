@@ -40,7 +40,7 @@
 		<div class="col-sm-6">
 			<div class="well">
 				<h3>Change subscriptions</h3>
-					<form action="/profile" method="post" id="subscriptions">
+					<form action="/profile" method="POST" id="subscriptions">
 						<div class="form-group">
 							<strong>Milk</strong>: <input type="checkbox" name="subscriptions" value="/milk"><br>
 							<strong>Bread</strong>: <input type="checkbox" name="subscriptions" value="/bread"><br>
@@ -67,6 +67,7 @@
 	    for(var i = 0; i < user.subscription.length; i++) {
 	    	client.subscribe(user.subscriptions[i], function(payload) {
 	    		// Show Message beneath Profile on /profile
+	    		
 	    	});
 	    };
 
@@ -81,7 +82,8 @@
 				if($(this)[i].checked) {
 					values.push($(this)[i].value);
 				};
-			};      
+			};
+
 	        // Specifiy AJAX 'POST' 
 	        var ajaxPost = $.ajax({
 	        	// Destination
