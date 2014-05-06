@@ -6,6 +6,30 @@
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	<script type='text/javascript' src='/faye/client.js'></script>
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script type='text/javascript'>
+	    // Create PubSub client
+	    var client = new Faye.Client('/faye');
+	    
+	    var subs = <%- JSON.stringify(user.subscriptions) %>;
+	    subs.forEach(function(sub) {
+	    	console.log('test');
+	    	client.subscribe(sub, function(payload) {
+	    		addTableRow(payload);
+	    	});
+	    });
+/*
+	    // Subscribe '/planets' topic
+	    client.subscribe('/milk', function(payload) {
+	        //
+	        console.log('incoming');
+	      	addTableRow(payload);
+	  	});
+*/
+	    var addTableRow = function(payload) {
+	       	$('#messages').append('<tr><td>' + payload.name + '</td><td>' + payload.price + '</td><td>' + payload.category + '</td><td>' + payload.market + '</td></tr>');
+	    };
+	</script>
 	<style>
 		body 		{ padding-top:80px; word-wrap:break-word; }
 	</style>
@@ -15,7 +39,7 @@
 
 	<div class="page-header text-center">
 		<h1><span class="fa fa-anchor"></span> BIO FIND</h1>
-		<a href="/" class="btn btn-default">HOME</a>
+		<a href='/profile/<%= user._id %>' class="btn btn-default">Profile</a>
 		<a href="/products" class="btn btn-default">Products</a>
 		<a href="/markets" class="btn btn-default">Markets</a>
 		<a href="/logout" class="btn btn-default"> Logout</a>
@@ -40,71 +64,37 @@
 		<div class="col-sm-6">
 			<div class="well">
 				<h3>Change subscriptions</h3>
-					<form action="/profile" method="POST" id="subscriptions">
-						<div class="form-group">
-							<strong>Milk</strong>: <input type="checkbox" name="subscriptions" value="/milk"><br>
-							<strong>Bread</strong>: <input type="checkbox" name="subscriptions" value="/bread"><br>
-							<strong>Meat</strong>: <input type="checkbox" name="subscriptions" value="/meat"><br>
-							<strong>Eggs</strong>: <input type="checkbox" name="subscriptions" value="/eggs"><br>
-							<strong>Drinks</strong>: <input type="checkbox" name="subscriptions" value="/drinks"><br>
-							<strong>Other</strong>: <input type="checkbox" name="subscriptions" value="/other"><br>
-						</div>
-						<button type="submit" class="btn btn-warning btn-lg">Change</button>
-					</form>
-				</div>
+				<form name='subscriptions' id='subscriptions' action='/profile/<%= user._id %>' method='POST' >
+					<div class="form-group">
+						<strong>Milk</strong>: <input type="checkbox" name="subscriptions" value="/milk"><br>
+						<strong>Bread</strong>: <input type="checkbox" name="subscriptions" value="/bread"><br>
+						<strong>Meat</strong>: <input type="checkbox" name="subscriptions" value="/meat"><br>
+						<strong>Eggs</strong>: <input type="checkbox" name="subscriptions" value="/eggs"><br>
+						<strong>Drinks</strong>: <input type="checkbox" name="subscriptions" value="/drinks"><br>
+						<strong>Other</strong>: <input type="checkbox" name="subscriptions" value="/other"><br>
+					</div>
+					<button type="submit" name="submit" class="btn btn-warning btn-lg">Change</button>
+				</form>
 			</div>
+		</div>
+
+		<div class="col-sm-6">
+			<div class="well">
+				<h3>News</h3>
+				<table id="messages">
+					<tr>
+						<th>Name</th>
+						<th>Price</th>
+						<th>Category</th>
+						<th>Market</th>
+					</tr>
+				</table>
+			</div>
+		</div>
 
 	</div>
 
 </div>
-<script>
-	$(document).ready(function() {
-		// Create PubSub client
-	    var client = new Faye.Client('/faye');
 
-	    // Subscribe topics
-	    
-	    for(var i = 0; i < user.subscription.length; i++) {
-	    	client.subscribe(user.subscriptions[i], function(payload) {
-	    		// Show Message beneath Profile on /profile
-	    		
-	    	});
-	    };
-
-	    // Define action after submitting form
-	    $('#subscriptions').submit(function(event) {
-	    	// Save destination of our form from 'action'
-	        var formURL = $(this).attr('action');
-	        
-	        var values = []; 
-			
-			for(var i = 0; i < $(this).length; i++) {
-				if($(this)[i].checked) {
-					values.push($(this)[i].value);
-				};
-			};
-
-	        // Specifiy AJAX 'POST' 
-	        var ajaxPost = $.ajax({
-	        	// Destination
-	            url: formURL,
-	            // Type of request
-	            type: 'POST',
-	            // Define what to be posted to server
-	            data: {values: values}
-	        });
-	        // Create pop-up (res.writeHead(200) required from server) and clear form after successful promise
-	        ajaxPost.done(function() {
-	        	alert('Subscriptions changed.');
-	          	$('#subscriptions')[0].reset();
-	        });
-	        // Create pop-up with error message after promise failed
-	        ajaxPost.fail(function(e) {
-	        	alert('Subscriptions could not be changed. (' + JSON.stringify(e) + ')');
-	        });
-			event.preventDefault();
-		});
-	});
-</script>
 </body>
 </html>

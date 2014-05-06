@@ -23,6 +23,7 @@ var bayeux = new faye.NodeAdapter({
 });
 //* Attach NoteAdapter to HTTP server
 bayeux.attach(server);
+
 //* Create PubSub-Client
 var pubClient = bayeux.getClient();
 
@@ -46,14 +47,15 @@ app.configure(function() {
 	app.use(passport.session()); // persistent login sessions
 	app.use(flash()); // use connect-flash for flash messages stored in session
 
+	app.use(express.static(__dirname + '/'));
+
 });
 
 // routes ======================================================================
-require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+require('./app/routes.js')(app, passport, pubClient); // load our routes and pass in our app and fully configured passport
 
 // launch ======================================================================
 /// Create HTTP Server
 server.listen(port, function(){
 	console.log('Express server listening on port ' + port);
 });
-// app.listen(port);

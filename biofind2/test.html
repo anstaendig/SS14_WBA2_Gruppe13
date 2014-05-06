@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>WBA2 - Week 2</title>
+		<!-- Load jQuery -->
+		<script type='text/javascript' src='http://code.jquery.com/jquery-1.11.0.min.js'></script>
+		<!-- Load faye -->
+		<script type='text/javascript' src='/faye/client.js'></script>
+	</head>
+	<body>
+		<!-- table markup -->
+				<table id="messages">
+					<tr>
+						<th>Name</th>
+						<th>Price</th>
+						<th>Category</th>
+						<th>Market</th>
+					</tr>
+				</table>
+
+		
+		<script type='text/javascript'>
+	      // Wait for document to be ready
+	      $(document).ready(function() {
+	        // Create PubSub client
+	        var client = new Faye.Client('/faye');
+
+	        // Subscribe '/planets' topic
+	        var subscription = client.subscribe('/milk', function(payload) {
+	          //
+	          addTableRow(payload);
+	      	});
+
+	        // Define action after submitting form
+	        
+	        var addTableRow = function(payload) {
+	        	$('#messages').append('<tr><td>' + payload.name + '</td><td>' + payload.price + '</td><td>' + payload.category + '</td></tr>' + payload.market + '</td></tr>');
+	        };
+	    });
+		</script>
+	</body>
+</html>
