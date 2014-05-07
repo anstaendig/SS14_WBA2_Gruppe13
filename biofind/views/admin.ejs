@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+<head>
+	<title>BIO FIND - Administration</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<style>
+		body 		{ padding-top:80px; word-wrap:break-word; }
+	</style>
+</head>
+<body>
+<div class="container">
+
+	<div class="page-header text-center">
+		<h1><span class="fa fa-anchor"></span> BIO FIND</h1>
+	</div>
+
+	<div class="row">
+
+		<!-- ADD PRODUCT -->
+		<div class="col-sm-6">
+			<div class="well">
+				<h3>Add product</h3>
+				<form action="/products" method="POST">
+					<div class="form-group">
+						<strong>Name</strong>: <input type="text" name="name" required><br>
+						<strong>Price</strong>: <input type="text" name="price" required><br>
+						<strong>Category</strong>: 	<select name="category" required>
+														<option value="/milk">Milk</option>
+														<option value="/bread">Bread</option>
+														<option value="/meat">Meat</option>
+														<option value="/eggs">Eggs</option>
+														<option value="/drinks">Drinks</option>
+														<option value="/other">Other</option>
+													</select>
+						<strong>Market</strong>: 	<select name="market" required>
+														<!-- Add one drop down value for each object in market collection -->
+														<% markets.forEach(function(market) { %>
+															<option value="<%= market.name %>"> <%= market.name %></option>
+														<% }) %>
+													</select>														
+					</div>
+					<button type="submit" class="btn btn-warning">Add</button>
+				</form>
+
+			</div>
+		</div>
+
+		<div class="col-sm-6">
+			<div class="well">
+				<h3>Delete product</h3>
+				<form id="delProduct" name="delProduct">
+					<div class="form-group">
+						<table>
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Price</th>
+									<th>Category</th>
+									<th>Market</th>
+									<th>Delete?</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- Add one table row for each object in producs collection -->
+								<% products.forEach(function(product) { %>
+									<tr>
+										<td><%= product.name %></a></td>
+										<td><%= product.price %></td>
+										<td><%= product.category %></td>
+										<td><%= product.market %></td>
+										<td><input type="radio" name="product" value="<%= product._id %>"></td>
+									</tr>
+								<% }) %>
+							</tbody>
+						</table>
+						<input type="submit" value="delete" class="btn btn-warning btn"/>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<!-- ADD MARKET -->
+		<div class="col-sm-6">
+			<div class="well">
+				<h3>Add market</h3>
+				<form action="/markets" method="POST">
+					<div class="form-group">
+						<strong>Name</strong>: <input type="text" name="name" required><br>
+						<strong>Time</strong>: <input type="text" name="address" required><br>
+						<strong>Open</strong>: <input type="text" name="open" requirey><br>												
+					</div>
+					<button type="submit" class="btn btn-warning">Add</button>
+				</form>
+
+			</div>
+		</div>
+
+		<div class="col-sm-6">
+			<div class="well">
+				<h3>Delete market</h3>
+				<form id="delMarket" name="delMarket">
+					<div class="form-group">
+						<table>
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Street</th>
+									<th>Time</th>
+									<th>Delete?</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- Add one table row for each object in markets collection -->
+								<% markets.forEach(function(market) { %>
+									<tr>
+										<td><%= market.name %></a></td>
+										<td><%= market.address %></td>
+										<td><%= market.open %></td>
+										<td><input type="radio" name="market" value="<%= market._id %>"></td>
+									</tr>
+								<% }) %>
+							</tbody>
+						</table>
+						<input type="submit" value="delete" class="btn btn-warning btn"/>
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+<!-- AJAX DELETE -->
+<script type='text/javascript'>
+	$(document).ready(function() {
+		$("#delProduct").submit(function(event) {
+			var url = '/products/' + $('input[name="product"]:checked').val();
+			$.ajax({
+				type: 'DELETE',
+				url: url,
+				data: $(this).serialize()
+			}).done(function(res) {
+				window.location.href = '/admin';
+			});
+			event.preventDefault();
+		});
+
+		$("#delMarket").submit(function(event) {
+			var url = '/markets/' + $('input[name="market"]:checked').val();
+			$.ajax({
+				type: 'DELETE',
+				url: url,
+				data: $(this).serialize()
+			}).done(function(res) {
+				window.location.href = '/admin';
+			});
+			event.preventDefault();
+		});
+
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+	<title>BIO FIND - Products</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<script type='text/javascript' src='/faye/client.js'></script> <!-- load faye client -->
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script> <!-- load jQuery -->
+	<style>
+		body 		{ padding-top:80px; word-wrap:break-word; }
+	</style>
+</head>
+<body>
+<div class="container">
+
+	<div class="page-header text-center">
+		<h1><span class="fa fa-anchor"></span> BIO FIND</h1>
+		<a href='/profile/<%= user._id %>' class="btn btn-default">Profile</a>		
+		<a href="/products" class="btn btn-default">Products</a>
+		<a href="/markets" class="btn btn-default">Markets</a>
+		<a href="/logout" class="btn btn-default"> Logout</a>
+	</div>
+
+	<div class="row">
+
+		<!-- SHOW PRODUCS -->
+		<div class="col-sm-6">
+			<div class="well">
+				<h3><span class="fa fa-user"></span> Products</h3>
+
+					<table id="products">
+						<tr>
+							<th>Name</th>
+							<th>Price</th>
+							<th>Category</th>
+							<th>Market</th>
+						</tr>
+						<!-- Add one table row for each object in producs collection with link to 'products/:id' resource -->
+						<% products.forEach(function(product) { %>
+							<tr>
+								<td><a href="/products/<%= product._id %>"><%= product.name %></a></td>
+								<td><%= product.price %></td>
+								<td><%= product.category %></td>
+								<td><%= product.market %></td>
+							</tr>
+						<% }) %>
+					</table>
+
+			</div>
+		</div>
+	</div>
+	<script type='text/javascript'>
+    	// Create PubSub client
+    	var client = new Faye.Client('/faye');
+    
+    	// subscribe topic products
+   		client.subscribe('/products', function(payload) {
+   			console.log(payload);
+    		addTableRow(payload);
+    	});
+
+    	var addTableRow = function(payload) {
+   			$('#products').append('<tr><td><a href="/products/' + payload._id + '">' + payload.name + '</a></td><td>' + payload.price + '</td><td>' + payload.category + '</td><td>' + payload.market + '</td></tr>');
+		};
+	</script>
+</div>
+</body>
+</html>

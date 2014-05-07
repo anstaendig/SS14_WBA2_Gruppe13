@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+	<title>BIO FIND - Markets</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<script type='text/javascript' src='/faye/client.js'></script> <!-- load faye client -->
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script> <!-- load jQuery -->
+	<style>
+		body 		{ padding-top:80px; word-wrap:break-word; }
+	</style>
+</head>
+<body>
+<div class="container">
+
+	<div class="page-header text-center">
+		<h1><span class="fa fa-anchor"></span> BIO FIND</h1>
+		<a href='/profile/<%= user._id %>' class="btn btn-default">Profile</a>			
+		<a href="/products" class="btn btn-default">Products</a>
+		<a href="/markets" class="btn btn-default">Markets</a>
+		<a href="/logout" class="btn btn-default"> Logout</a>
+	</div>
+
+	<div class="row">
+
+		<!-- SHOW MARKETS -->
+		<div class="col-sm-6">
+			<div class="well">
+				<h3><span class="fa fa-user"></span> Markets</h3>
+
+				<table id="markets">
+					<tr>
+						<th>Name</th>
+						<th>Street</th>
+						<th>Time</th>
+					</tr>
+					<!-- Add one table row for each object in markets collection with link to 'markets/:id' resource -->
+					<% markets.forEach(function(market) { %>
+						<tr>
+							<td><a href="/markets/<%= market._id %>"><%= market.name %></a></td>
+							<td><%= market.address %></td>
+							<td><%= market.open %></td>
+						</tr>
+					<% }) %>
+				</table>
+
+			</div>
+		</div>
+	</div>
+	<script type='text/javascript'>
+    	// Create PubSub client
+    	var client = new Faye.Client('/faye');
+    
+    	// subscribe topic products
+   		client.subscribe('/markets', function(payload) {
+   			console.log(payload);
+    		addTableRow(payload);
+    	});
+
+    	var addTableRow = function(payload) {
+   			$('#markets').append('<tr><td><a href="/markets/' + payload._id + '">' + payload.name + '</a></td><td>' + payload.address + '</td><td>' + payload.open + '</td><tr>');
+		};
+	</script>
+</div>
+</body>
+</html>
