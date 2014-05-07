@@ -45,9 +45,11 @@ module.exports = function(app, passport, pubClient) {
 	// handle '/GET' of resource '/profile/:id'
 	// using 'isLoggedIn' as middle ware to make sure user is logged in 
 	app.get('/profile/:id', isLoggedIn, function(req, res) {
-		res.render('profile.ejs', {
-			user: req.user 														// send user data from session to '/views/profile.ejs'
-		});
+		if(req.params.id == req.user._id) {
+			res.render('profile.ejs', {	user: req.user });						// send user data from session to '/views/profile.ejs'
+		} else {
+			res.redirect('/logout');
+		};
 	});
 
 	// handle 'POST' from subscription change form

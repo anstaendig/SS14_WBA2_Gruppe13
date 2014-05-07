@@ -60,7 +60,7 @@
     	});
 
     	var addTableRow = function(payload) {
-   			$('#products').append('<tr><td><a href="/products/' + payload._id + '">' + payload.name + '</a></td><td>' + payload.price + '</td><td>' + payload.category + '</td><td>' + payload.market + '</td></tr>');
+   			$('#products').append('<tr><td>' + payload.name + '</td><td>' + payload.price + '</td><td>' + payload.category + '</td><td>' + payload.market + '</td></tr>');
 		};
 	</script>
 </div>

@@ -58,7 +58,7 @@
     	});
 
     	var addTableRow = function(payload) {
-   			$('#markets').append('<tr><td><a href="/markets/' + payload._id + '">' + payload.name + '</a></td><td>' + payload.address + '</td><td>' + payload.open + '</td><tr>');
+   			$('#markets').append('<tr><td>' + payload.name + '</td><td>' + payload.address + '</td><td>' + payload.open + '</td><tr>');
 		};
 	</script>
 </div>
