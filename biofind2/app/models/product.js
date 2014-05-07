@@ -1,4 +1,3 @@
-// app/models/product.js
 // load the things we need
 var mongoose = require('mongoose');
 
@@ -11,5 +10,5 @@ var productSchema = mongoose.Schema({
 	// marketID: String
 });
 
-// create the model for users and expose it to our app
+// create the model for products and expose it to our app
 module.exports = mongoose.model('Product', productSchema);

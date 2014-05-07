@@ -1,35 +1,11 @@
-<!-- views/profile.ejs -->
 <!doctype html>
 <html>
 <head>
-	<title>Node Authentication</title>
+	<title>BIO FIND - Profile</title>
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-	<script type='text/javascript' src='/faye/client.js'></script>
-	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-	<script type='text/javascript'>
-	    // Create PubSub client
-	    var client = new Faye.Client('/faye');
-	    
-	    var subs = <%- JSON.stringify(user.subscriptions) %>;
-	    subs.forEach(function(sub) {
-	    	console.log('test');
-	    	client.subscribe(sub, function(payload) {
-	    		addTableRow(payload);
-	    	});
-	    });
-/*
-	    // Subscribe '/planets' topic
-	    client.subscribe('/milk', function(payload) {
-	        //
-	        console.log('incoming');
-	      	addTableRow(payload);
-	  	});
-*/
-	    var addTableRow = function(payload) {
-	       	$('#messages').append('<tr><td>' + payload.name + '</td><td>' + payload.price + '</td><td>' + payload.category + '</td><td>' + payload.market + '</td></tr>');
-	    };
-	</script>
+	<script type='text/javascript' src='/faye/client.js'></script> <!-- load faye client -->
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script> <!-- load jQuery -->
 	<style>
 		body 		{ padding-top:80px; word-wrap:break-word; }
 	</style>
@@ -54,7 +30,8 @@
 
 					<p>
 						<strong>E-Mail</strong>: <%= user.email %><br>
-						<strong>Subscriptions</strong>: <% for(var i = 0; i < user.subscriptions.length; i++) { %>
+						<strong>Subscriptions</strong>: <!-- Show all subscriptions from array in user object -->
+														<% for(var i = 0; i < user.subscriptions.length; i++) { %>
 															<%= user.subscriptions[i] %>
 														<% } %>
 					</p>
@@ -64,7 +41,7 @@
 		<div class="col-sm-6">
 			<div class="well">
 				<h3>Change subscriptions</h3>
-				<form name='subscriptions' id='subscriptions' action='/profile/<%= user._id %>' method='POST' >
+				<form name='subscriptions' action='/profile/<%= user._id %>' method='POST'>
 					<div class="form-group">
 						<strong>Milk</strong>: <input type="checkbox" name="subscriptions" value="/milk"><br>
 						<strong>Bread</strong>: <input type="checkbox" name="subscriptions" value="/bread"><br>
@@ -95,6 +72,21 @@
 	</div>
 
 </div>
+<script type='text/javascript'>
+    // Create PubSub client
+    var client = new Faye.Client('/faye');
+    
+    // subscribe each topic from subscriptions array in user object
+    var subs = <%- JSON.stringify(user.subscriptions) %>; // make EJS scripting useable as array in js
+    subs.forEach(function(sub) {
+    	client.subscribe(sub, function(payload) {
+    		addTableRow(payload);
+    	});
+    });
 
+    var addTableRow = function(payload) {
+   	$('#messages').append('<tr><td>' + payload.name + '</td><td>' + payload.price + '</td><td>' + payload.category + '</td><td>' + payload.market + '</td></tr>');
+	};	
+</script>
 </body>
 </html>

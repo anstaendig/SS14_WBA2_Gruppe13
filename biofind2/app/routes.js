@@ -1,120 +1,105 @@
+
 var User       		= require('../app/models/user');
 var Product       	= require('../app/models/product');
 var Market       	= require('../app/models/market');
 
-// app/routes.js
+
 module.exports = function(app, passport, pubClient) {
-	// =====================================
-	// HOME PAGE (with login links) ========
-	// =====================================
+	// Home page
 	app.get('/', function(req, res) {
-		res.render('index.ejs'); // load the index.ejs file
+		res.render('index.ejs'); 												// render 'views/index.ejs'
 	});
 
-	// =====================================
-	// LOGIN ===============================
-	// =====================================
-	// show the login form
+	// LOGIN
+	// handle '/GET' of login form
 	app.get('/login', function(req, res) {
-
-		// render the page and pass in any flash data if it exists
+		// render 'views/login.ejs' and possible flash message from passport.js
 		res.render('login.ejs', { message: req.flash('loginMessage') }); 
 	});
 
-	// process the login form
+	// handle 'POST' from login form
 	app.post('/login', passport.authenticate('login', {
-		// successRedirect : '/profile', // redirect to the secure profile section
-		failureRedirect : '/login', // redirect back to the login page if there is an error
-		failureFlash : true // allow flash messages
+		failureRedirect : '/login', 											// redirect to 'login' if auth failed
+		failureFlash : true 													// allow flash messages
 	}), function(req, res) {
-		res.redirect('/profile/' + req.user._id);
+		res.redirect('/profile/' + req.user._id);								// redirect to unique resource '/profile/:id'
 	});
 
-	// =====================================
-	// SIGNUP ==============================
-	// =====================================
-	// show the signup form
+	// SIGNUP
+	// handle '/GET' of signup form
 	app.get('/signup', function(req, res) {
 
-		// render the page and pass in any flash data if it exists
+		// render 'views/login.ejs' and possible flash message from passport.js
 		res.render('signup.ejs', { message: req.flash('signupMessage') });
 	});
 
-	// process the signup form
+	// handle 'POST' from signup form
 	app.post('/signup', passport.authenticate('signup', {
-		successRedirect : '/profile', // redirect to the secure profile section
-		failureRedirect : '/signup', // redirect back to the signup page if there is an error
-		failureFlash : true // allow flash messages
-	}));
+		failureRedirect : '/signup', 											// redirect to 'signup' if signup failed
+		failureFlash : true 													// allow flash messages
+	}), function(req, res) {
+		res.redirect('/profile/' + req.user._id);								// redirect to unique resource '/profile/:id'
+	});
 
-	// =====================================
-	// PROFILE SECTION =====================
-	// =====================================
-	// we will want this protected so you have to be logged in to visit
-	// we will use route middleware to verify this (the isLoggedIn function)
+	// PROFILE
+	// handle '/GET' of resource '/profile/:id'
+	// using 'isLoggedIn' as middle ware to make sure user is logged in 
 	app.get('/profile/:id', isLoggedIn, function(req, res) {
 		res.render('profile.ejs', {
-			user : req.user // get the user out of session and pass to template
+			user: req.user 														// send user data from session to '/views/profile.ejs'
 		});
 	});
 
-	app.post('/profile/:id', function(req, res) {
-		req.user.subscriptions = req.body.subscriptions;
-		req.user.save();
-		res.redirect('/profile/' + req.user._id);
+	// handle 'POST' from subscription change form
+	app.post('/profile/:id', isLoggedIn, function(req, res) {
+		req.user.subscriptions = req.body.subscriptions;						// set new user subscriptions
+		req.user.save();														// save user to database
+		res.redirect('/profile/' + req.user._id);								// redirect to '/profile/:id'
 	});
 
-	// =====================================
-	// LOGOUT ==============================
-	// =====================================
+	// LOGOUT
+	// handle 'GET' of logout
 	app.get('/logout', function(req, res) {
 		req.logout();
-		res.redirect('/');
+		res.redirect('/');														// redirect to home page
 	});
 
-	// =====================================
-	// ADMIN ===============================
-	// =====================================
-	// show the login form
+	// ADMIN
 	app.get('/admin', function(req, res) {
-		return Market.find(function(err, markets) {
-			if(!err) {
-				res.render('admin.ejs', { markets: markets });
-			};
-		}); 
-	});
 
-	// =====================================
-	// PRODUCTS ============================
-	// =====================================
-	// show the login form
-	app.get('/products', function(req, res) {
+		// render 'views/products.ejs' and send collection of markets and products
 		return Product.find(function(err, products) {
 			if(err) throw err;
 			markets = Market.find(function(err, markets) {
 				if(err) throw err;
-				res.render('products.ejs', { markets: markets, products: products }); 
+				res.render('admin.ejs', { markets: markets, products: products }); 
+			});
+		});
+	});
+
+	// PRODUCTS
+	app.get('/products', isLoggedIn, function(req, res) {
+
+		// render 'views/products.ejs' and send collection of markets and products
+		return Product.find(function(err, products) {
+			if(err) throw err;
+			markets = Market.find(function(err, markets) {
+				if(err) throw err;
+				res.render('products.ejs', { markets: markets, products: products, user: req.user }); 
 			});
 		});
 	});	
 
-	app.get('/products/:id', function(req, res) {
-
-		// render the page
-		res.json('admin.ejs'); 
-	});	
-
 	app.post('/products', function(req, res, done) {
-		console.log(req.body);
+		// create new product based on product.js model and save it to database
 		var newProduct = new Product();
 		newProduct.name = req.body.name;
 		newProduct.price = req.body.price;
 		newProduct.category = req.body.category;
 		newProduct.market = req.body.market;
-		// newProduct.marketID = req.body.marketID;
 		newProduct.save();
 
-		// Publish document
+		// Publish document 
 		var publication = pubClient.publish(req.body.category, req.body);
 
 		// Promise handler after successful 'publish()'
@@ -122,26 +107,41 @@ module.exports = function(app, passport, pubClient) {
 			// Log name of published object
 			console.log(req.body.name + ' published to ' + req.body.category);
 		});
+
+		var publication2 = pubClient.publish('/products', req.body);
+		publication2.then(function() {
+			console.log(req.body.name + ' published to /products!');
+		});
 		res.redirect('/admin');
 	});	
 
-	// =====================================
-	// MARKETS =============================
-	// =====================================
-	// show the login form
-	app.get('/markets', function(req, res) {
+	app.get('/products/:id', isLoggedIn, function(req, res) {
+
+		// render 'views/product.ejs' and send product object 
+		return Product.findById(req.params.id, function(err, product) {
+			if(!err) {
+				console.log(product.name);
+				res.render('product.ejs', { product: product, user: req.user });
+			};
+		}); 
+	});
+
+	app.del('/products/:id', function(req, res) {
+		Product.findByIdAndRemove(req.body.product, function(err, product) {
+			if(err) throw err;
+			console.log(req.body);
+			res.send();
+		});
+	});
+
+	// MARKETS
+	app.get('/markets', isLoggedIn, function(req, res) {
+		// render 'views/markets.ejs' and send collection of markets
 		return Market.find(function(err, markets) {
 			if(!err) {
-				res.render('markets.ejs', { markets: markets });
-				// console.log(markets);
+				res.render('markets.ejs', { markets: markets, user: req.user });
 			} else throw err;
 		});
-	});	
-
-	app.get('/markets/:id', function(req, res) {
-
-		// render the page
-		res.json('admin.ejs'); 
 	});	
 
 	app.post('/markets', function(req, res, done) {
@@ -150,9 +150,30 @@ module.exports = function(app, passport, pubClient) {
 		newMarket.address = req.body.address;
 		newMarket.open = req.body.open;
 		newMarket.save();
+
+		var publication = pubClient.publish('/markets', req.body);
+		publication.then(function() {
+			console.log(req.body.name + ' published to /markets!');
+		});
 		res.redirect('/admin');
+	});
+
+	app.get('/markets/:id', isLoggedIn, function(req, res) {
+		// render 'views/market.ejs' and send market object 
+		return Market.findById(req.params.id, function(err, market) {
+			if(!err) {
+				res.render('market.ejs', { market: market, user: req.user });
+			};
+		}); 
 	});	
 
+	app.del('/markets/:id', function(req, res) {
+		Market.findByIdAndRemove(req.body.market, function(err, market) {
+			if(err) throw err;
+			console.log(req.body);
+			res.send();
+		});
+	});
 
 };
 

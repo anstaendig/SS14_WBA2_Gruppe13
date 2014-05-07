@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-	<title>BIO FIND - Products</title>
+	<title>BIO FIND - Markets</title>
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	<script type='text/javascript' src='/faye/client.js'></script> <!-- load faye client -->
@@ -15,7 +15,7 @@
 
 	<div class="page-header text-center">
 		<h1><span class="fa fa-anchor"></span> BIO FIND</h1>
-		<a href='/profile/<%= user._id %>' class="btn btn-default">Profile</a>		
+		<a href='/profile/<%= user._id %>' class="btn btn-default">Profile</a>			
 		<a href="/products" class="btn btn-default">Products</a>
 		<a href="/markets" class="btn btn-default">Markets</a>
 		<a href="/logout" class="btn btn-default"> Logout</a>
@@ -23,28 +23,26 @@
 
 	<div class="row">
 
-		<!-- SHOW PRODUCS -->
+		<!-- SHOW MARKETS -->
 		<div class="col-sm-6">
 			<div class="well">
-				<h3><span class="fa fa-user"></span> Products</h3>
+				<h3><span class="fa fa-user"></span> Markets</h3>
 
-					<table id="products">
+				<table id="markets">
+					<tr>
+						<th>Name</th>
+						<th>Street</th>
+						<th>Time</th>
+					</tr>
+					<!-- Add one table row for each object in markets collection with link to 'markets/:id' resource -->
+					<% markets.forEach(function(market) { %>
 						<tr>
-							<th>Name</th>
-							<th>Price</th>
-							<th>Category</th>
-							<th>Market</th>
+							<td><a href="/markets/<%= market._id %>"><%= market.name %></a></td>
+							<td><%= market.address %></td>
+							<td><%= market.open %></td>
 						</tr>
-						<!-- Add one table row for each object in producs collection with link to 'products/:id' resource -->
-						<% products.forEach(function(product) { %>
-							<tr>
-								<td><a href="/products/<%= product._id %>"><%= product.name %></a></td>
-								<td><%= product.price %></td>
-								<td><%= product.category %></td>
-								<td><%= product.market %></td>
-							</tr>
-						<% }) %>
-					</table>
+					<% }) %>
+				</table>
 
 			</div>
 		</div>
@@ -54,13 +52,13 @@
     	var client = new Faye.Client('/faye');
     
     	// subscribe topic products
-   		client.subscribe('/products', function(payload) {
+   		client.subscribe('/markets', function(payload) {
    			console.log(payload);
     		addTableRow(payload);
     	});
 
     	var addTableRow = function(payload) {
-   			$('#products').append('<tr><td><a href="/products/' + payload._id + '">' + payload.name + '</a></td><td>' + payload.price + '</td><td>' + payload.category + '</td><td>' + payload.market + '</td></tr>');
+   			$('#markets').append('<tr><td><a href="/markets/' + payload._id + '">' + payload.name + '</a></td><td>' + payload.address + '</td><td>' + payload.open + '</td><tr>');
 		};
 	</script>
 </div>
