@@ -82,7 +82,7 @@
     	client.subscribe(sub, function(payload) {
     		addTableRow(payload);
     	});
-    });
+    });,
 
     var addTableRow = function(payload) {
    	$('#messages').append('<tr><td>' + payload.name + '</td><td>' + payload.price + '</td><td>' + payload.category + '</td><td>' + payload.market + '</td></tr>');

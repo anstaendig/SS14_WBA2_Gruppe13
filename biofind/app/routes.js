@@ -14,7 +14,7 @@ module.exports = function(app, passport, pubClient) {
 	// handle '/GET' of login form
 	app.get('/login', function(req, res) {
 		// render 'views/login.ejs' and possible flash message from passport.js
-		res.render('login.ejs', { message: req.flash('loginMessage') }); 
+		res.render('login.ejs', { message: req.flash('loginMessage') });
 	});
 
 	// handle 'POST' from login form
@@ -43,7 +43,7 @@ module.exports = function(app, passport, pubClient) {
 
 	// PROFILE
 	// handle '/GET' of resource '/profile/:id'
-	// using 'isLoggedIn' as middle ware to make sure user is logged in 
+	// using 'isLoggedIn' as middle ware to make sure user is logged in
 	app.get('/profile/:id', isLoggedIn, function(req, res) {
 		if(req.params.id == req.user._id) {
 			res.render('profile.ejs', {	user: req.user });						// send user data from session to '/views/profile.ejs'
@@ -74,7 +74,7 @@ module.exports = function(app, passport, pubClient) {
 			if(err) throw err;
 			markets = Market.find(function(err, markets) {
 				if(err) throw err;
-				res.render('admin.ejs', { markets: markets, products: products }); 
+				res.render('admin.ejs', { markets: markets, products: products });
 			});
 		});
 	});
@@ -87,10 +87,10 @@ module.exports = function(app, passport, pubClient) {
 			if(err) throw err;
 			markets = Market.find(function(err, markets) {
 				if(err) throw err;
-				res.render('products.ejs', { markets: markets, products: products, user: req.user }); 
+				res.render('products.ejs', { markets: markets, products: products, user: req.user });
 			});
 		});
-	});	
+	});
 
 	app.post('/products', function(req, res, done) {
 		// create new product based on product.js model and save it to database
@@ -101,7 +101,7 @@ module.exports = function(app, passport, pubClient) {
 		newProduct.market = req.body.market;
 		newProduct.save();
 
-		// Publish document 
+		// Publish document
 		var publication = pubClient.publish(req.body.category, req.body);
 
 		// Promise handler after successful 'publish()'
@@ -115,21 +115,21 @@ module.exports = function(app, passport, pubClient) {
 			console.log(req.body.name + ' published to /products!');
 		});
 		res.redirect('/admin');
-	});	
+	});
 
 	app.get('/products/:id', isLoggedIn, function(req, res) {
 
-		// render 'views/product.ejs' and send product object 
+		// render 'views/product.ejs' and send product object
 		return Product.findById(req.params.id, function(err, product) {
 			if(!err) {
 				console.log(product.name);
 				res.render('product.ejs', { product: product, user: req.user });
 			};
-		}); 
+		});
 	});
 
 	app.del('/products/:id', function(req, res) {
-		Product.findByIdAndRemove(req.body.product, function(err, product) {
+		Product.findByIdAndRemove(req.params.id, function(err, product) {
 			if(err) throw err;
 			console.log(req.body);
 			res.send();
@@ -144,7 +144,7 @@ module.exports = function(app, passport, pubClient) {
 				res.render('markets.ejs', { markets: markets, user: req.user });
 			} else throw err;
 		});
-	});	
+	});
 
 	app.post('/markets', function(req, res, done) {
 		var newMarket = new Market();
@@ -161,13 +161,13 @@ module.exports = function(app, passport, pubClient) {
 	});
 
 	app.get('/markets/:id', isLoggedIn, function(req, res) {
-		// render 'views/market.ejs' and send market object 
+		// render 'views/market.ejs' and send market object
 		return Market.findById(req.params.id, function(err, market) {
 			if(!err) {
 				res.render('market.ejs', { market: market, user: req.user });
 			};
-		}); 
-	});	
+		});
+	});
 
 	app.del('/markets/:id', function(req, res) {
 		Market.findByIdAndRemove(req.body.market, function(err, market) {
@@ -182,7 +182,7 @@ module.exports = function(app, passport, pubClient) {
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
 
-	// if user is authenticated in the session, carry on 
+	// if user is authenticated in the session, carry on
 	if (req.isAuthenticated())
 		return next();
 
