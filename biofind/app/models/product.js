@@ -8,7 +8,7 @@ var productSchema = mongoose.Schema({
 	category: String,
 	market: String
 	// marketID: String
-}, { collection: carbs });
+});
 
 // create the model for products and expose it to our app
 module.exports = mongoose.model('Product', productSchema);

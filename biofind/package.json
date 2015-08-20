@@ -7,7 +7,7 @@
     "ejs": "~0.8.5",
     "express": "~3.4.4",
     "faye": "latest",
-    "mongoose": "~3.8.1",
+    "mongoose": "latest",
     "passport": "~0.1.17",
     "passport-local": "~0.1.6"
   }

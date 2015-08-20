@@ -1,0 +1,383 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"dep",
+				"dependency〔argument〕"
+			],
+			[
+				"get",
+				"getShortMessages〔function〕"
+			],
+			[
+				"requie",
+				"require"
+			],
+			[
+				"spaw",
+				"spawnedProcess〔variable〕"
+			],
+			[
+				"to",
+				"toUpperCase"
+			],
+			[
+				"pizza",
+				"pizzaToppings〔variable〕"
+			],
+			[
+				"lo",
+				"console.log(message);"
+			],
+			[
+				"str",
+				"stringify"
+			],
+			[
+				"getM",
+				"getMinutes〔function〕"
+			],
+			[
+				"req",
+				"req	require"
+			],
+			[
+				"readdir",
+				"fs.readdir(path, callback);"
+			],
+			[
+				"readFile",
+				"fs.readFile(path, encoding_);"
+			],
+			[
+				"for",
+				"for	for (…) {…}"
+			],
+			[
+				"message",
+				"console.log(message);"
+			],
+			[
+				"s",
+				"styles.css"
+			],
+			[
+				"align",
+				"align-content"
+			],
+			[
+				"col",
+				"column"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 375.0,
+		"last_filter": "tabs",
+		"selected_items":
+		[
+			[
+				"tabs",
+				"Indentation: Convert to Tabs"
+			],
+			[
+				"rein",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"reind",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"snippet",
+				"Snippet: Immediately-invoked function expression"
+			],
+			[
+				"lint",
+				"SublimeLinter: Lint This View"
+			],
+			[
+				"indent",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"ssjne",
+				"Set Syntax: JavaScript Next"
+			],
+			[
+				"ssj",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"sscss",
+				"Set Syntax: CSS"
+			],
+			[
+				"comment",
+				"Toggle Comment"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"dis",
+				"Package Control: Disable Package"
+			],
+			[
+				"disable",
+				"Package Control: Disable Package"
+			],
+			[
+				"find",
+				"FindKeyConflicts: All Conflicts"
+			],
+			[
+				"terminal",
+				"Preferences: Terminal Settings – User"
+			]
+		],
+		"width": 508.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/anstaendig/code/SS14_WBA2_Gruppe13"
+	],
+	"file_history":
+	[
+		"/Users/anstaendig/code/NodeSchool.io/functional-javascript-workshop/async-loops.js",
+		"/Users/anstaendig/code/NodeSchool.io/functional-javascript-workshop/basic-call.js",
+		"/Users/anstaendig/code/NodeSchool.io/functional-javascript-workshop/basic-reduce.js",
+		"/Users/anstaendig/code/NodeSchool.io/functional-javascript-workshop/basic-recursion.js",
+		"/Users/anstaendig/code/NodeSchool.io/functional-javascript-workshop/partial-application-without-bind.js",
+		"/Users/anstaendig/code/NodeSchool.io/functional-javascript-workshop/partial-application-with-bind.js",
+		"/Users/anstaendig/code/NodeSchool.io/functional-javascript-workshop/implement-map-with-reduce.js",
+		"/Users/anstaendig/code/NodeSchool.io/functional-javascript-workshop/function-spies.js",
+		"/Users/anstaendig/code/NodeSchool.io/functional-javascript-workshop/blocking-event-loop.js",
+		"/Users/anstaendig/code/NodeSchool.io/functional-javascript-workshop/trampoline.js",
+		"/Users/anstaendig/code/NodeSchool.io/stream-adventure/duplexer-redux.js",
+		"/Users/anstaendig/code/NodeSchool.io/functional-javascript-workshop/basic-every-some.js",
+		"/Users/anstaendig/code/NodeSchool.io/functional-javascript-workshop/basic-filter.js",
+		"/Users/anstaendig/code/NodeSchool.io/functional-javascript-workshop/basic-map.js",
+		"/Users/anstaendig/code/NodeSchool.io/functional-javascript-workshop/hello-world.js",
+		"/Users/anstaendig/code/NodeSchool.io/functional-javascript-workshop/higher-order-functions.js",
+		"/Users/anstaendig/code/NodeSchool.io/stream-adventure/duplex.js",
+		"/Users/anstaendig/code/NodeSchool.io/stream-adventure/html-stream.js",
+		"/Users/anstaendig/code/NodeSchool.io/stream-adventure/websockets.js",
+		"/Users/anstaendig/code/NodeSchool.io/stream-adventure/http-client.js",
+		"/Users/anstaendig/code/NodeSchool.io/stream-adventure/http-server.js",
+		"/Users/anstaendig/code/NodeSchool.io/stream-adventure/concat.js",
+		"/Users/anstaendig/code/NodeSchool.io/stream-adventure/lines.js",
+		"/Users/anstaendig/code/NodeSchool.io/stream-adventure/transform.js",
+		"/Users/anstaendig/code/NodeSchool.io/stream-adventure/input-output.js",
+		"/Users/anstaendig/code/NodeSchool.io/stream-adventure/meet-pipe.js",
+		"/Users/anstaendig/code/NodeSchool.io/stream-adventure/program.js",
+		"/Users/anstaendig/code/NodeSchool.io/how-to-npm/test.js",
+		"/Users/anstaendig/code/NodeSchool.io/how-to-npm/README.md",
+		"/Users/anstaendig/code/NodeSchool.io/how-to-npm/npm-debug.log",
+		"/Users/anstaendig/code/NodeSchool.io/how-to-npm/package.json",
+		"/Users/anstaendig/code/NodeSchool.io/scope-chains-closures/01.js",
+		"/Users/anstaendig/code/NodeSchool.io/javascripting/scope.js",
+		"/Users/anstaendig/code/NodeSchool.io/javascripting/function-arguments.js",
+		"/Users/anstaendig/code/NodeSchool.io/javascripting/functions.js",
+		"/Users/anstaendig/code/NodeSchool.io/javascripting/object-properties.js",
+		"/Users/anstaendig/code/patchwork/contributors/add-anstaendig.txt",
+		"/Users/anstaendig/code/patchwork/add-anstaendig.txt",
+		"/Users/anstaendig/code/NodeSchool.io/javascripting/objects.js",
+		"/Users/anstaendig/code/NodeSchool.io/javascripting/looping-through-arrays.js",
+		"/Users/anstaendig/code/NodeSchool.io/javascripting/accessing-array-values.js",
+		"/Users/anstaendig/code/NodeSchool.io/javascripting/array-filtering.js",
+		"/Users/anstaendig/code/NodeSchool.io/javascripting/arrays.js",
+		"/Users/anstaendig/code/NodeSchool.io/javascripting/for-loop.js",
+		"/Users/anstaendig/code/NodeSchool.io/javascripting/if-statement.js",
+		"/Users/anstaendig/code/NodeSchool.io/javascripting/number-to-string.js",
+		"/Users/anstaendig/code/NodeSchool.io/javascripting/rounding-numbers.js",
+		"/Users/anstaendig/code/NodeSchool.io/javascripting/numbers.js",
+		"/Users/anstaendig/code/NodeSchool.io/javascripting/revising-strings.js",
+		"/Users/anstaendig/code/NodeSchool.io/javascripting/string-length.js",
+		"/Users/anstaendig/code/NodeSchool.io/javascripting/strings.js",
+		"/Users/anstaendig/code/learnyounode/07.js",
+		"/Users/anstaendig/code/learnyounode/08/program.js",
+		"/Users/anstaendig/code/learnyounode/09/program.js",
+		"/Users/anstaendig/code/learnyounode/06/program.js",
+		"/Users/anstaendig/code/learnyounode/program.js",
+		"/Users/anstaendig/code/learnyounode/06/mymodule.js",
+		"/Users/anstaendig/code/learnyounode/05.js",
+		"/Users/anstaendig/code/learnyounode/03.js",
+		"/Users/anstaendig/code/learnyounode/04.js",
+		"/Users/anstaendig/code/learnyounode/02.js",
+		"/Users/anstaendig/code/exercises/flexbox-nav/style.css",
+		"/Users/anstaendig/code/exercises/flexbox-nav/index.html",
+		"/Users/anstaendig/code/program.js",
+		"/Users/anstaendig/Library/Application Support/Sublime Text 3/Packages/User/SideBarEnhancements/Open With/Side Bar.sublime-menu",
+		"/Users/anstaendig/Library/Application Support/Sublime Text 3/Packages/User/SublimeLinter.sublime-settings",
+		"/Users/anstaendig/code/EISSS15GellertHolter/README.md",
+		"/Users/anstaendig/.zshrc",
+		"/Users/anstaendig/Library/Application Support/Sublime Text 3/Packages/User/SublimeCodeIntel.sublime-settings",
+		"/Users/anstaendig/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/anstaendig/Library/Application Support/Sublime Text 3/Packages/User/Terminal.sublime-settings",
+		"/Users/anstaendig/Library/Application Support/Sublime Text 3/Packages/SublimeCodeIntel/SublimeCodeIntel.sublime-settings"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"loud"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"stream"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "biofind.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 149.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
